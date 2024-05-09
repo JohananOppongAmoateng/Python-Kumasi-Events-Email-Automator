@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "python-kumasi-events-email-automator"
+version = "0.1.0"
+description = ""
+authors = ["Johanan Oppong Amoateng <johananoppongamoateng2001@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^5.0.6"
+django-crispy-forms = "^2.1"
+crispy-bootstrap5 = "^2024.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
