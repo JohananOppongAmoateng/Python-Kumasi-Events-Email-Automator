@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Upload CSV File{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Upload CSV File</h2>
+<form method="post" action="{% url 'upload_csv_file' %}">
+    {% csrf_token %}
+    {{ form | crispy}}
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

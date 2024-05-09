@@ -1,0 +1,15 @@
+
+Dear {{ attendee_name }},
+
+You are invited to the {{ event.title }} event by {{ user.username }}.
+
+Event Details:
+Location: {{ event.location }}
+Date: {{ event.date }}
+Time: {{ event.time }}
+
+Please join us for this event.
+
+Sincerely,
+The {{user.username}} Team
+```
