@@ -105,11 +105,12 @@ def email_attendees(request, event_id):
 
             # Send all emails at once
             send_mass_mail(messages)
+            return render(
+                request,
+                "core/event_detail.html",
+                {"event": event, "message": "Emails sent successfully!"},
+            )
    except SMTPException as e:
         print(e)
 
-   return render(
-        request,
-        "core/event_detail.html",
-        {"event": event, "message": "Emails sent successfully!"},
-    )
+   
