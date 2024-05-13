@@ -1,3 +1,4 @@
+from smtplib import SMTPException
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from .forms import UploadCSVFileForm, EventForm
 from .models import Attendee, Event
@@ -84,27 +85,30 @@ def delete_event(request, event_id):
 
 @login_required(login_url="/accounts/login/")
 def email_attendees(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
-    attendees = get_list_or_404(Attendee, user_id=request.user)
-    user = request.user
+   event = get_object_or_404(Event, id=event_id)
+   attendees = get_list_or_404(Attendee, user_id=request.user)
+   user = request.user
+   subject = f"Invitation to {event.title} event by {request.user.username}"
+   messages = []
 
-    subject = f"Invitation to {event.title} event by {request.user.username}"
-    messages = []
-    for attendee in attendees:
-        # Prepare a list of attendee names
-        attendee_name = attendee.name
+   try:
+        for attendee in attendees:
+            # Prepare a list of attendee names
+            attendee_name = attendee.name
 
-        # Pass attendee name to the template context
-        context = {"event": event, "attendee_name": attendee_name, "user": user}
+            # Pass attendee name to the template context
+            context = {"event": event, "attendee_name": attendee_name, "user": user}
 
-        message = render_to_string("core/email_attendees.txt", context)
+            message = render_to_string("core/email_attendees.txt", context)
 
-        messages.append((subject, message, user.email, [attendee.email]))
+            messages.append((subject, message, user.email, [attendee.email]))
 
-    # Send all emails at once
-    send_mass_mail(messages)
+            # Send all emails at once
+            send_mass_mail(messages)
+   except SMTPException as e:
+        print(e)
 
-    return render(
+   return render(
         request,
         "core/event_detail.html",
         {"event": event, "message": "Emails sent successfully!"},
