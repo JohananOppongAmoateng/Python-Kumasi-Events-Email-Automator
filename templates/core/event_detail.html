@@ -3,13 +3,14 @@
 {% block title %}Event Detail{% endblock %}
 
 {% block content %}
+    <h1>Event Detail</h1>
     <h2>{{ event.title }}</h2>
     <p>{{ event.description }}</p>
     <p>{{ event.date }}</p>
     <p>{{ event.location }}</p>
-    <a href="{% url 'edit_event' event.id %}">Edit</a>
-    <a href="{% url 'delete_event' event.id %}">Delete</a>
-    <a href="{% url 'email_attendees' event.id %}">Email Past Event Attendees</a>
-    <a href="{% url 'index' %}">Back to list</a>
+    <a class="btn btn-block btn-primary" href="{% url 'edit_event' event.id %}">Edit</a>
+    <a class="btn btn-block btn-primary" href="{% url 'delete_event' event.id %}">Delete</a>
+    <a class="btn btn-block btn-primary" href="{% url 'email_attendees' event.id %}">Email Event Attendees</a>
+    <a class="btn btn-block btn-secondary" href="{% url 'index' %}">Back to home</a>
 {% endblock %}
 

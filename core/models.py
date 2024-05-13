@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import datetime
 
 # Create your models here.
 class Attendee(models.Model):
@@ -12,13 +13,12 @@ class Attendee(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    date = models.DateField(auto_now=True)
-    time = models.TimeField(auto_now=True)
+    datetime = models.DateTimeField(auto_now_add=True)
     location = models.CharField(max_length=100)
     user_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ["-date"]
+        ordering = ["-datetime"]
 
         
 

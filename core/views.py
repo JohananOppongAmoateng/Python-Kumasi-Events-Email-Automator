@@ -15,11 +15,12 @@ def create_attendee_from_csv(csv_file, request):
     csv_reader = csv.DictReader(csv_file)
     for row in csv_reader:
         _, created = Attendee.objects.get_or_create(
-            name=row["name"],
-            email=row["email"],
-            phone=row["phone"],
+            name=row["Name"],
+            email=row["Email"],
+            phone=row["Phone"],
             user_id=request.user,
         )
+
 
 
 @login_required(login_url="/accounts/login/")
@@ -31,12 +32,14 @@ def index(request):
 @login_required(login_url="/accounts/login/")
 def upload_csv_file(request):
     if request.method == "POST":
-        form = UploadCSVFileForm(request.POST, request.FILES)
+        form = UploadCSVFileForm(request.POST,request.FILES)
         if form.is_valid():
-            csv_file = request.FILES["csv_file"]
+            csv_file = request.FILES["csv"]
+            print("Valid file uploaded")
+            # print(csv_file)
             print(csv_file)
             create_attendee_from_csv(csv_file, request)
-            render(request, "core/index.html", {})
+            return redirect("index")
     else:
         form = UploadCSVFileForm()
     return render(request, "core/upload_csv_file.html", {"form": form})

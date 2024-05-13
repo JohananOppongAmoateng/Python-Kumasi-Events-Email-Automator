@@ -1,34 +1,45 @@
 {% extends "base.html" %}
 
-{% block title %}My amazing blog{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block content %}
     <h1>Event Email Automator</h1>
     <p>Welcome to the Event Email Automator. This is a simple Django app that allows you to create events, and send email reminders to attendees.</p>
     
-    <a href="{% url 'create_event' %}">Create Event</a>
-    <a href="{% url 'upload_csv_file' %}">Upload CSV File</a>
+    <a class="text-decoration-none btn btn-primary btn-block"  href="{% url 'create_event' %}">Create Event</a>
+  
+   
+        <a class="btn btn-block btn-primary text-decoration-none" href="{% url 'upload_csv_file' %}">Upload CSV File</a>
 
     <h2>Events</h2>
-    {% if events%}
-    <ul>
-        {% for event in events %}
-            <li><a href="{% url 'event_detail' event.id %}">{{ event.title }}</a></li>
+    {% if events %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Title<th>
+            <th scope="col">Description</th>
+            <th scope="col">Date and Time</th>
+            <th scope="col">Location</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <td>
+                <a  class="text-decoration-none" href="{% url 'event_detail' event.id %}">{{ event.title }}</a></td>
+            <td>{{ event.description }}</td>
+            <td>{{ event.datetime }}</td>
+            <td>{{ event.location }}</td></li>
         {% endfor %}
+          <tr>
+            
+          </tr>
+        
+        </tbody>
+      </table>
+    <ul>
+        
     </ul>
     {% else %}
     <p>No upcoming events</p>
     {% endif %}
-    
-    <!-- <h2>Past events</h2>
-    {% if past_events %}
-    
-    <ul>
-        {% for event in upcoming_events %}
-            <li><a href="{% url 'core:event_detail' event.id %}">{{ event.title }}</a></li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No past events</p>
-    {% endif %} -->
 {% endblock %}
